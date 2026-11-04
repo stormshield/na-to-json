@@ -38,10 +38,7 @@ Double clic sur l'application `naBackupToJson.exe`
 L'application permet de comparer deux sauvegardes (deux fichiers `.json` déjà générés, deux archives `.na`, ou un mélange des deux) et de générer un fichier JSON ne contenant que les différences.
 
 - **Dans l'IHM** : cliquez sur le bouton **"Comparer (Diff)"** en haut de la fenêtre, sélectionnez les fichiers "avant" et "après" (avec mot de passe si nécessaire pour un `.na`), cliquez sur "Comparer", puis "Enregistrer la différence".
-- **En ligne de commande** :
-  ```powershell
-  python main.py -db <fichier_avant.json|.na> -da <fichier_apres.json|.na> [-do <diff_sortie.json>] [-pwb <mot_de_passe_avant>] [-pwa <mot_de_passe_après>]
-  ```
+
 - Le fichier de différence généré contient, pour chaque élément modifié, ajouté ou supprimé, un marqueur `__diff__` (`added`, `removed` ou `modified`) ainsi que les valeurs concernées ; les éléments identiques entre les deux fichiers ne sont pas repris.
 
 ---
@@ -80,8 +77,5 @@ Double-click on the `naBackupToJson.exe` application
 The application can compare two backups (two already-generated `.json` files, two `.na` archives, or a mix of both) and generate a JSON file containing only the differences.
 
 - **In the GUI**: click the **"Compare (Diff)"** button at the top of the window, pick the "before" and "after" files (with a password if needed for a `.na` archive), click "Compare", then "Save difference".
-- **From the command line**:
-  ```powershell
-  python main.py -db <before_file.json|.na> -da <after_file.json|.na> [-do <output_diff.json>] [-pwb <before_password>] [-pwa <after_password>]
-  ```
+
 - The generated diff file marks each added, removed, or modified element with a `__diff__` key (`added`, `removed`, or `modified`) along with the relevant values; items identical between both files are omitted.
