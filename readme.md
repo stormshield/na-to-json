@@ -19,7 +19,7 @@ The application allows you to:
 - **Compare** two backups and identify the items added, removed and modified,
 - **Automate** conversion and comparison from the command line.
 
-![Comparison of two backups](docs/images/en/06-comparaison-unifiee.png)
+![Comparison of two backups](Docs/images/en/06-comparaison-unifiee.png)
 
 > [!IMPORTANT]
 > Backups are processed only on the workstation. No data is sent over the network and passwords are never saved.
@@ -68,7 +68,7 @@ L'application permet de :
 - **Comparer** deux sauvegardes et identifier les éléments ajoutés, supprimés et modifiés,
 - **Automatiser** la conversion et la comparaison en ligne de commande.
 
-![Comparaison de deux sauvegardes](docs/images/fr/06-comparaison-unifiee.png)
+![Comparaison de deux sauvegardes](Docs/images/fr/06-comparaison-unifiee.png)
 
 > [!IMPORTANT]
 > Les sauvegardes sont traitées exclusivement sur le poste de travail. Aucune donnée n'est transmise sur le réseau et les mots de passe ne sont jamais enregistrés.
