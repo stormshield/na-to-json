@@ -1,81 +1,101 @@
-# Convertisseur de Sauvegarde Stormshield en JSON / Stormshield Backup to JSON Converter
+# NABACKUPTOJSON
 
-[Version Française](#version-française-fr) | [English Version](#english-version-en)
-
----
-
-## Version Française (FR)
-
-Cette application écrite en Python (GUI construite avec tkinter, intégré à Python) permet de charger et convertir une archive de firewall Stormshield (`*.na`) en un fichier JSON unique et structuré.
-
-### Fonctionnalités
-
-- **Extraction & Décryptage** : Appelle l'utilitaire `decbackup.exe` pour décrypter l'archive (prend en charge les mots de passe si l'archive est chiffrée).
-- **Structure JSON** : Organise les dossiers et fichiers sous forme de dictionnaire imbriqué (les clés correspondent aux noms réels des dossiers/fichiers).
-- **Formatage des fichiers** : 
-  - Les fichiers de type configuration (ex. `config`) sont analysés comme des fichiers INI (les sections comme `[ProxyHTTP]` deviennent des sous-clés).
-  - Les commentaires (commençant par `#`) sont supprimés et les lignes vides épurées.
-  - Les fichiers textes simples sont stockés sous forme de liste de lignes.
-  - Les fichiers binaires ou chiffrés non lisibles sont marqués `"Non déchiffrable"` (ou `"Undecipherable"`).
-  - Les fichiers binaires globaux sont convertis en Base64.
-- **Interface** :
-  - Thèmes Clair et Sombre.
-  - Multilingue (Français / Anglais) dynamique sans redémarrage.
-  - Arbre de navigation interactif avec barre de recherche filtrante en temps réel.
-  - Aperçu hybride (visualisation de la structure arborescente à gauche, contenu et métadonnées du fichier sélectionné à droite, avec un onglet d'aperçu du JSON brut final).
-
-### Prérequis
-
-- **decbackup.exe** : Placé à la racine du projet ou configuré via l'onglet Paramètres.
-- **Aucune dépendance externe** à installer.
-
-### Lancement
-
-Double clic sur l'application `naBackupToJson.exe`
-
-### Comparaison de sauvegardes (Diff)
-
-L'application permet de comparer deux sauvegardes (deux fichiers `.json` déjà générés, deux archives `.na`, ou un mélange des deux) et de générer un fichier JSON ne contenant que les différences.
-
-- **Dans l'IHM** : cliquez sur le bouton **"Comparer (Diff)"** en haut de la fenêtre, sélectionnez les fichiers "avant" et "après" (avec mot de passe si nécessaire pour un `.na`), cliquez sur "Comparer", puis "Enregistrer la différence".
-
-- Le fichier de différence généré contient, pour chaque élément modifié, ajouté ou supprimé, un marqueur `__diff__` (`added`, `removed` ou `modified`) ainsi que les valeurs concernées ; les éléments identiques entre les deux fichiers ne sont pas repris.
+**[English](#english)** | **[Français](#francais)**
 
 ---
 
-## English Version (EN)
+<a id="english"></a>
 
-This Python application (GUI built with tkinter, bundled with Python) allows you to load and convert a Stormshield firewall backup archive (`*.na`) into a single structured JSON file.
+## 🇬🇧 English
 
-### Features
+### Overview
 
-- **Extraction & Decryption**: Runs `decbackup.exe` to decrypt the archive (handles encryption passwords).
-- **JSON Structure**: Organizes folders and files as a nested dictionary (keys are folder/file names).
-- **Configuration Parsing**:
-  - Configuration-style text files (e.g. `config`) are parsed as INI files (sections like `[ProxyHTTP]` become sub-keys).
-  - Comments (starting with `#`) are stripped and empty lines are removed.
-  - Regular text files are parsed as a list of lines.
-  - Undecipherable/encrypted values are marked `"Undecipherable"` (or `"Non déchiffrable"`).
-  - Global binary files are Base64-encoded.
-- **Interface**:
-  - Light and Dark themes.
-  - Dynamic multilingual support (French / English) without restarting.
-  - Interactive file tree view with a real-time filter search bar.
-  - Hybrid layout (file tree structure on the left, selected file details/content on the right, alongside a raw JSON output preview).
+naBackupToJson is a Windows application for working with configuration backups of Stormshield Network Security (SNS) firewalls.
 
-### Prerequisites
+The application allows you to:
 
-- **decbackup.exe**: Placed at the project root or configured in the Settings panel.
-- **No external dependencies** to install.
+- **Convert** a configuration backup (`.na` file) into a single, structured JSON file,
+- **Explore** the content of a backup before exporting it: tree, search, filters by type and reading of configuration files,
+- **Compare** two backups and identify the items added, removed and modified,
+- **Automate** conversion and comparison from the command line.
 
-### Run
+![Comparison of two backups](docs/images/en/06-comparaison-unifiee.png)
 
-Double-click on the `naBackupToJson.exe` application
+> [!IMPORTANT]
+> Backups are processed only on the workstation. No data is sent over the network and passwords are never saved.
 
-### Backup Comparison (Diff)
+### System requirements
 
-The application can compare two backups (two already-generated `.json` files, two `.na` archives, or a mix of both) and generate a JSON file containing only the differences.
+| Item | Description |
+| :--- | :--- |
+| Operating system | Windows 10 or Windows 11, 64-bit. |
+| .NET | [.NET 10 Desktop Runtime (x64)](https://dotnet.microsoft.com/download/dotnet/10.0) for the graphical application. The command-line tool runs without any .NET installation. |
+| decbackup.exe | Tool that decodes `.na` backups. It is not included with the application. |
 
-- **In the GUI**: click the **"Compare (Diff)"** button at the top of the window, pick the "before" and "after" files (with a password if needed for a `.na` archive), click "Compare", then "Save difference".
+### Installation
 
-- The generated diff file marks each added, removed, or modified element with a `__diff__` key (`added`, `removed`, or `modified`) along with the relevant values; items identical between both files are omitted.
+naBackupToJson is available in two forms, on the repository **Releases** page:
+
+| File | Description |
+| :--- | :--- |
+| `naBackupToJson-<version>-setup-win-x64.exe` | Installer. Installing for the current user does not require administrator rights. |
+| `naBackupToJson-<version>-portable-win-x64.zip` | Portable version. Settings are saved in the application folder, for example on a USB drive. |
+
+To install and use naBackupToJson:
+
+1. Run the installer, or extract the portable version into a writable folder,
+2. Copy your `decbackup.exe` into the application folder, or set its location in **Settings** > **Path to decbackup.exe**,
+3. Start naBackupToJson,
+4. Drop a `.na` backup on the window, then click **Convert**.
+
+> [!NOTE]
+> If naBackupToJson is already installed, the installer offers to update, uninstall or cancel.
+
+---
+
+<a id="francais"></a>
+
+## 🇫🇷 Français
+
+### Présentation
+
+naBackupToJson est une application Windows destinée à l'exploitation des sauvegardes de configuration des firewalls Stormshield Network Security (SNS).
+
+L'application permet de :
+
+- **Convertir** une sauvegarde de configuration (fichier `.na`) en un fichier JSON unique et structuré,
+- **Explorer** le contenu d'une sauvegarde avant de l'exporter : arborescence, recherche, filtres par type et lecture des fichiers de configuration,
+- **Comparer** deux sauvegardes et identifier les éléments ajoutés, supprimés et modifiés,
+- **Automatiser** la conversion et la comparaison en ligne de commande.
+
+![Comparaison de deux sauvegardes](docs/images/fr/06-comparaison-unifiee.png)
+
+> [!IMPORTANT]
+> Les sauvegardes sont traitées exclusivement sur le poste de travail. Aucune donnée n'est transmise sur le réseau et les mots de passe ne sont jamais enregistrés.
+
+### Configuration requise
+
+| Élément | Description |
+| :--- | :--- |
+| Système d'exploitation | Windows 10 ou Windows 11, 64 bits. |
+| .NET | [.NET 10 Desktop Runtime (x64)](https://dotnet.microsoft.com/download/dotnet/10.0) pour l'application graphique. L'outil en ligne de commande fonctionne sans installation de .NET. |
+| decbackup.exe | Outil de décodage des sauvegardes `.na`. Il n'est pas fourni avec l'application. |
+
+### Installation
+
+naBackupToJson est disponible sous deux formes, dans la page **Releases** du dépôt :
+
+| Fichier | Description |
+| :--- | :--- |
+| `naBackupToJson-<version>-setup-win-x64.exe` | Installateur. L'installation pour l'utilisateur courant ne nécessite pas de droits d'administration. |
+| `naBackupToJson-<version>-portable-win-x64.zip` | Version portable. Les réglages sont enregistrés dans le dossier de l'application, par exemple sur une clé USB. |
+
+Pour installer et utiliser naBackupToJson :
+
+1. Lancez l'installateur, ou décompressez la version portable dans un dossier accessible en écriture,
+2. Copiez votre `decbackup.exe` dans le dossier de l'application, ou indiquez son emplacement dans **Paramètres** > **Chemin de decbackup.exe**,
+3. Lancez naBackupToJson,
+4. Déposez une sauvegarde `.na` sur la fenêtre, puis cliquez sur **Convertir**.
+
+> [!NOTE]
+> Si naBackupToJson est déjà installé, l'installateur propose de mettre à jour, de désinstaller ou d'annuler.
